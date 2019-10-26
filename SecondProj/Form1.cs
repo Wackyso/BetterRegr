@@ -37,6 +37,7 @@ namespace SecondProj
         public static string[] Lines;
         public static int Watches;
         public static int Variables;
+        public static double[] YMain;
         public AllVar()
         {
             Watches = 0;
@@ -44,20 +45,22 @@ namespace SecondProj
             string[] _line = Lines[0].Split(' ', '	');
 
             Variables = _line.Length;
+            Watches = Lines.Length;
 
-            for (int _i = 0; _i < Variables; _i++)
+            double[] YMain = new double[Watches];
+            double[,] XMain = new double[Watches, Variables];
+
+            for (int _i = 0; _i < Watches; _i++)
             {
                 _line = Lines[_i].Split(' ', '	');
-
+                for(int _j = 0; _j < Variables; _j++)
+                {
+                    if (_j == 0)
+                        YMain[_i] = Convert.ToDouble(_line[_j]);
+                    else
+                        XMain[_i, _j] = Convert.ToDouble(_line[_j]);
+                }
             }
-        }
-    }
-
-    public class Reading : AllVar
-    {
-        public void Readfile()
-        {
-
         }
     }
 
