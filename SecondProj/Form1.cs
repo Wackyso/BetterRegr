@@ -27,15 +27,13 @@ namespace SecondProj
 
             string filename = openFileDialog1.FileName;
             AllVar.Lines = System.IO.File.ReadAllLines(filename);
-
             AllVar _obj1 = new AllVar();
+            Regression reg = new Regression();
+            ChartManager Charts = new ChartManager(LinearChart, ExpChart, PowerChart, RepresChart);
+
+            Charts.FormChart();
             _obj1.XYMaking();
 
-            Regression reg = new Regression();
-
-            ChartManager Charts = new ChartManager(LinearChart, ExpChart, PowerChart, RepresChart);
-            Charts.FormChart();
-            
             reg.Linest();
             Charts.ChartBuild(LinearChart);
 
@@ -54,6 +52,10 @@ namespace SecondProj
         public static double[,] XTemp;
         public static double[] AverageTemp;
         public static double[] CoeffTemp;
+        public static double Det;
+        public static double Aprox;
+        public static string Fstat;
+        public static string Stud;
         public void XYMaking ()
         {
             Watches = 234;
@@ -162,24 +164,51 @@ namespace SecondProj
                     XTemp[i, j] = XMain[i, j];
                 YTemp[i] = YMain[i];
             }
+
             SLE();
-
             YTempMaker();
-
-            //ChartManager.ChartBuild(LinearChart);
         }
 
-        public void Exp()
+        /*public void Exp()
         {
-            
+            for (int i = 0; i < Watches; i++)
+            {
+                for (int j = 0; j < Variables; j++)
+                    XTemp[i, j] = XMain[i, j];
+                YTemp[i] = YMain[i];
+            }
+
+            SLE();
+            YTempMaker();
         }
 
         public void Power()
         {
+            for (int i = 0; i < Watches; i++)
+            {
+                for (int j = 0; j < Variables; j++)
+                    XTemp[i, j] = XMain[i, j];
+                YTemp[i] = YMain[i];
+            }
 
+            SLE();
+            YTempMaker();
         }
 
         public void Repres()
+        {
+            for (int i = 0; i < Watches; i++)
+            {
+                for (int j = 0; j < Variables; j++)
+                    XTemp[i, j] = XMain[i, j];
+                YTemp[i] = YMain[i];
+            }
+
+            SLE();
+            YTempMaker();
+        }*/
+
+        public void EvalQual()
         {
 
         }
@@ -239,7 +268,13 @@ namespace SecondProj
 
     public class TextManager : AllVar
     {
-
+        public void TextBuild(Label _label1)
+        {
+            _label1.Text =$"Коеф. детерминации: {Det}  \n" + 
+                          $"Ошибка аппроксимации: {Aprox} \n" + 
+                          $"Адекватна ли модель(F-stat) {Fstat}\n" +
+                          $"Критерий Стьюдента: {Stud}\n";
+        }
     }
     
 }
