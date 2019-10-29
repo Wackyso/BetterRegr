@@ -26,56 +26,47 @@ namespace SecondProj
                 return;
 
             string filename = openFileDialog1.FileName;
-            AllVar.Lines = System.IO.File.ReadAllLines(filename);
-            AllVar _obj1 = new AllVar();
-            Regression reg = new Regression();
+            ReadFile.Lines = System.IO.File.ReadAllLines(filename);
+
+            ReadFile read = new ReadFile();
+            read.XYMaking();
+
             ChartManager Charts = new ChartManager(LinearChart, ExpChart, PowerChart, RepresChart);
 
+            Regression reg = new Regression();
             Charts.FormChart();
-            _obj1.XYMaking();
+            
 
             reg.Linest();
-            Charts.ChartBuild(LinearChart);
+            Charts.ChartBuild(LinearChart,reg);
 
             
         }
     }
 
-    public class AllVar
+    public class ReadFile
     {
-        public static string[] Lines;
-        public static int Watches;
-        public static int Variables;
         public static double[] YMain;
         public static double[,] XMain;
-        public static double[] YTemp;
-        public static double[,] XTemp;
-        public static double[] AverageTemp;
-        public static double[] CoeffTemp;
-        public static double Det;
-        public static double Aprox;
-        public static string Fstat;
-        public static string Stud;
+        public static string[] Lines;
+
         public void XYMaking ()
         {
-            Watches = 234;
-            Variables = 0;
+            Regression.Watches = 0;
+            Regression.Variables = 0;
             string[] _line = Lines[0].Split(' ', '	');
 
-            Variables = _line.Length;
-            Watches = Lines.Length;
+            Regression.Variables = _line.Length;
+            Regression.Watches = Lines.Length;
 
-            YMain = new double[Watches];
-            XMain = new double[Watches, Variables];
-            YTemp = new double[Watches];
-            XTemp= new double [Watches, Variables];
-            AverageTemp= new double[Variables];
-            CoeffTemp= new double [Variables];
+            YMain = new double[Regression.Watches];
+            XMain = new double[Regression.Watches, Regression.Variables];
             
-            for (int _i = 0; _i < Watches; _i++)
+            
+            for (int _i = 0; _i < Regression.Watches; _i++)
             {
                 _line = Lines[_i].Split(' ', '	');
-                for(int _j = 0; _j < Variables; _j++)
+                for(int _j = 0; _j < Regression.Variables; _j++)
                 {
                     if (_j == 0)
                     {
@@ -89,8 +80,27 @@ namespace SecondProj
         }
     }
 
-    public class Regression : AllVar
+    public class Regression 
     {
+        
+        public static int Watches;
+        public static int Variables;
+        public double[] YTemp;
+        public double[,] XTemp;
+        public double[] AverageTemp;
+        public double[] CoeffTemp;
+        public double Det;
+        public double Aprox;
+        public string Fstat;
+        public string Stud;
+
+        public Regression()
+        {
+            YTemp = new double[Watches];
+            XTemp = new double [Watches, Variables];
+            CoeffTemp = new double[Variables];
+            AverageTemp = new double[Variables];
+        }
         public void SLE()
         {
             double _a = 0;
@@ -144,7 +154,7 @@ namespace SecondProj
             }
         } 
 
-        public void YTempMaker()
+        public void YTempMake()
         {
             for (int _i=0; _i< Watches; _i++)
             {
@@ -161,12 +171,12 @@ namespace SecondProj
             for (int i = 0; i < Watches; i++)
             {
                 for (int j = 0; j < Variables; j++)
-                    XTemp[i, j] = XMain[i, j];
-                YTemp[i] = YMain[i];
+                    XTemp[i, j] = ReadFile.XMain[i, j];
+                YTemp[i] = ReadFile.YMain[i];
             }
 
             SLE();
-            YTempMaker();
+            YTempMake();
         }
 
         /*public void Exp()
@@ -214,7 +224,7 @@ namespace SecondProj
         }
     }
 
-    public class ChartManager : AllVar
+    public class ChartManager 
     {
         public readonly Chart LinearChart;
         public readonly Chart ExpChart;
@@ -256,17 +266,19 @@ namespace SecondProj
             RepresChart.Series["y esmitated"].ChartType = SeriesChartType.Line;
         }
 
-        public void ChartBuild(Chart _chart1)
+        public void ChartBuild(Chart _chart1, Regression _obj)
         {
-            for (int j = 0; j < Watches; j++)
+            Regression _temp = _obj;
+
+            for (int j = 0; j < Regression.Watches; j++)
             {
-                _chart1.Series["y esmitated"].Points.Add(YTemp[j], XMain[j, 1]);
-                _chart1.Series["y fact"].Points.Add(YMain[j], XMain[j, 1]);
+                _chart1.Series["y esmitated"].Points.Add(_temp.YTemp[j], ReadFile.XMain[j, 1]);
+                _chart1.Series["y fact"].Points.Add(ReadFile.YMain[j], ReadFile.XMain[j, 1]);
             }
         }
     }
 
-    public class TextManager : AllVar
+    /*public class TextManager 
     {
         public void TextBuild(Label _label1)
         {
@@ -275,6 +287,6 @@ namespace SecondProj
                           $"Адекватна ли модель(F-stat) {Fstat}\n" +
                           $"Критерий Стьюдента: {Stud}\n";
         }
-    }
+    }*/
     
 }
