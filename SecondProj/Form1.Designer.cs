@@ -52,6 +52,7 @@
             this.ButTextInp = new System.Windows.Forms.Button();
             this.DescriptLabel = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.OneVarFourCharts = new System.Windows.Forms.Button();
             this.Back.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ExpChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RepresChart)).BeginInit();
@@ -61,6 +62,7 @@
             // 
             // Back
             // 
+            this.Back.Controls.Add(this.OneVarFourCharts);
             this.Back.Controls.Add(this.RepresLabel);
             this.Back.Controls.Add(this.PowerLabel);
             this.Back.Controls.Add(this.ExpLabel);
@@ -181,9 +183,9 @@
             // 
             this.ButTextInp.Location = new System.Drawing.Point(17, 150);
             this.ButTextInp.Name = "ButTextInp";
-            this.ButTextInp.Size = new System.Drawing.Size(122, 98);
+            this.ButTextInp.Size = new System.Drawing.Size(153, 98);
             this.ButTextInp.TabIndex = 3;
-            this.ButTextInp.Text = "button1";
+            this.ButTextInp.Text = "Выбрать файл с данными";
             this.ButTextInp.UseVisualStyleBackColor = true;
             this.ButTextInp.Click += new System.EventHandler(this.ButTextInp_Click);
             // 
@@ -201,6 +203,16 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // OneVarFourCharts
+            // 
+            this.OneVarFourCharts.Location = new System.Drawing.Point(17, 254);
+            this.OneVarFourCharts.Name = "OneVarFourCharts";
+            this.OneVarFourCharts.Size = new System.Drawing.Size(245, 98);
+            this.OneVarFourCharts.TabIndex = 12;
+            this.OneVarFourCharts.Text = "Одна переменная, модели линейная,степенная, экспоненциальная, показательная";
+            this.OneVarFourCharts.UseVisualStyleBackColor = true;
+            this.OneVarFourCharts.Click += new System.EventHandler(this.OneVarFourCharts_Click);
             // 
             // Form1
             // 
@@ -234,6 +246,7 @@
         private System.Windows.Forms.Button ButTextInp;
         private System.Windows.Forms.Label DescriptLabel;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button OneVarFourCharts;
     }
 }
 
