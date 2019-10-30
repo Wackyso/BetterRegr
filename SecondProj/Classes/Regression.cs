@@ -16,8 +16,8 @@ namespace SecondProj
         public double[] AverageTemp;
         public double[] CoeffTemp;
         public double Det;
-        public double Aprox;
-        public string Fstat;
+        public double Aprox = 0;
+        public bool Fstat;
         public string Stud;
 
         public Regression()
@@ -103,6 +103,8 @@ namespace SecondProj
 
             SLE();
             YTempMake();
+
+            EvalQual();
         }
 
         public void Exp()
@@ -118,11 +120,10 @@ namespace SecondProj
             CoeffTemp[0] = Math.Exp(CoeffTemp[0]);
             for (int _i = 0; _i < Watches; _i++)
             {
-                YTemp[_i] += CoeffTemp[0] * Math.Exp(XTemp[_i, 1] * CoeffTemp[1]);
+                YTemp[_i] = CoeffTemp[0] * Math.Exp(XTemp[_i, 1] * CoeffTemp[1]);
             }
 
-            for (int i = 0; i < Watches; i++)
-                YTemp[i] = Math.Exp(YTemp[i]);
+            EvalQual();
         }
 
         public void Power()
@@ -139,11 +140,10 @@ namespace SecondProj
             CoeffTemp[1] = Math.Exp(CoeffTemp[1]);
             for (int _i = 0; _i < Watches; _i++)
             {
-                YTemp[_i] += CoeffTemp[0] * Math.Pow(CoeffTemp[1], XTemp[_i, 1]);
+                YTemp[_i] = CoeffTemp[0] * Math.Pow(CoeffTemp[1], XTemp[_i, 1]);
             }
 
-            for (int i = 0; i < Watches; i++)
-                YTemp[i] = Math.Exp(YTemp[i]);
+            EvalQual();
         }
 
         public void Repres()
@@ -151,7 +151,7 @@ namespace SecondProj
             for (int i = 0; i < Watches; i++)
             {
                 for (int j = 0; j < Variables; j++)
-                    XTemp[i, j] = Math.Log(ReadFile.XMain[i, j]);
+                    XTemp[i, j] = j==0 ? (1) : (Math.Log(ReadFile.XMain[i, j]));
                 YTemp[i] = Math.Log(ReadFile.YMain[i]);
             }
 
@@ -160,15 +160,32 @@ namespace SecondProj
 
             for (int _i = 0; _i < Watches; _i++)
             {
-                YTemp[_i] += CoeffTemp[0] * Math.Pow(XTemp[_i, 1], CoeffTemp[1]);
+                YTemp[_i] = CoeffTemp[0] * Math.Pow(ReadFile.XMain[_i, 1], CoeffTemp[1]);
             }
 
-            for (int i = 0; i < Watches; i++)
-                YTemp[i] = Math.Exp(YTemp[i]);
+            EvalQual();
         }
 
         public void EvalQual()
         {
+            double _nom = 0;
+            double _denom = 0;
+            
+            for(int i = 0; i < Watches; i++)
+            {
+                _nom += Math.Pow(ReadFile.YMain[i] - YTemp[i], 2);
+                _denom += Math.Pow(ReadFile.YMain[i] - AverageTemp[0], 2);
+            }
+
+            Det = 1 - _nom / _denom;
+
+            for (int i = 0; i < Watches; i++)
+            {
+                Aprox += Math.Abs((ReadFile.YMain[i] - YTemp[i])/ ReadFile.YMain[i]);
+            }
+            
+            Aprox /= Watches;
+
 
         }
     }

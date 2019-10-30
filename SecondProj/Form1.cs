@@ -42,27 +42,22 @@ namespace SecondProj
             Regression linest = new Regression();
             linest.Linest();
             Charts.ChartBuild(LinearChart, linest);
+            TextManager.TextBuild(LinarLabel, linest);
 
             Regression exp = new Regression();
-            exp.Linest();
+            exp.Exp();
             Charts.ChartBuild(ExpChart, exp);
+            TextManager.TextBuild(ExpLabel, exp);
 
             Regression power = new Regression();
-            power.Linest();
+            power.Power();
             Charts.ChartBuild(PowerChart, power);
+            TextManager.TextBuild(PowerLabel, power);
 
             Regression repres = new Regression();
-            repres.Linest();
+            repres.Repres();
             Charts.ChartBuild(RepresChart, repres);
+            TextManager.TextBuild(RepresLabel, repres);
         }
     }
-
-    
-
-    
-
-    
-
-    /**/
-    
 }

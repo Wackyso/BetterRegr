@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SecondProj
 {
     public class TextManager
     {
-        /*public void TextBuild(Label _label1)
+        public static void TextBuild(Label _label1, Regression obj)
         {
-            _label1.Text = $"Коеф. детерминации: {Det}  \n" +
-                          $"Ошибка аппроксимации: {Aprox} \n" +
-                          $"Адекватна ли модель(F-stat) {Fstat}\n" +
-                          $"Критерий Стьюдента: {Stud}\n";
-        }*/
+            _label1.Text = $"Коеф. детерминации: {obj.Det}  \n" +
+                          $"Ошибка аппроксимации: {obj.Aprox} \n" +
+                          $"Адекватна ли модель(F-stat) {obj.Fstat}\n" +
+                          $"Критерий Стьюдента: {obj.Stud}\n";
+        }
     }
 }
