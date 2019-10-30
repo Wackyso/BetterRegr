@@ -32,15 +32,23 @@ namespace SecondProj
             read.XYMaking();
 
             ChartManager Charts = new ChartManager(LinearChart, ExpChart, PowerChart, RepresChart);
-
-            Regression reg = new Regression();
             Charts.FormChart();
-            
 
-            reg.Linest();
-            Charts.ChartBuild(LinearChart,reg);
+            Regression linest = new Regression();
+            linest.Linest();
+            Charts.ChartBuild(LinearChart,linest);
 
-            
+            Regression exp = new Regression();
+            exp.Linest();
+            Charts.ChartBuild(ExpChart, exp);
+
+            Regression power = new Regression();
+            power.Linest();
+            Charts.ChartBuild(PowerChart, power);
+
+            Regression repres = new Regression();
+            repres.Linest();
+            Charts.ChartBuild(RepresChart, repres);
         }
     }
 
@@ -179,17 +187,24 @@ namespace SecondProj
             YTempMake();
         }
 
-        /*public void Exp()
+        public void Exp()
         {
             for (int i = 0; i < Watches; i++)
             {
                 for (int j = 0; j < Variables; j++)
-                    XTemp[i, j] = XMain[i, j];
-                YTemp[i] = YMain[i];
+                    XTemp[i, j] = ReadFile.XMain[i, j];
+                YTemp[i] = Math.Log(ReadFile.YMain[i]);
             }
 
             SLE();
-            YTempMaker();
+            CoeffTemp[0] = Math.Exp(CoeffTemp[0]);
+            for (int _i = 0; _i < Watches; _i++)
+            {
+                YTemp[_i] += CoeffTemp[0]*Math.Exp( XTemp[_i, 1] * CoeffTemp[1]);
+            }
+            
+            for (int i = 0; i < Watches; i++)
+                YTemp[i] = Math.Exp(YTemp[i]);
         }
 
         public void Power()
@@ -197,12 +212,20 @@ namespace SecondProj
             for (int i = 0; i < Watches; i++)
             {
                 for (int j = 0; j < Variables; j++)
-                    XTemp[i, j] = XMain[i, j];
-                YTemp[i] = YMain[i];
+                    XTemp[i, j] = ReadFile.XMain[i, j];
+                YTemp[i] = Math.Log(ReadFile.YMain[i]);
             }
 
             SLE();
-            YTempMaker();
+            CoeffTemp[0] = Math.Exp(CoeffTemp[0]);
+            CoeffTemp[1] = Math.Exp(CoeffTemp[1]);
+            for (int _i = 0; _i < Watches; _i++)
+            {
+                YTemp[_i] += CoeffTemp[0] * Math.Pow(CoeffTemp[1],XTemp[_i, 1]);
+            }
+
+            for (int i = 0; i < Watches; i++)
+                YTemp[i] = Math.Exp(YTemp[i]);
         }
 
         public void Repres()
@@ -210,13 +233,21 @@ namespace SecondProj
             for (int i = 0; i < Watches; i++)
             {
                 for (int j = 0; j < Variables; j++)
-                    XTemp[i, j] = XMain[i, j];
-                YTemp[i] = YMain[i];
+                    XTemp[i, j] = Math.Log(ReadFile.XMain[i, j]);
+                YTemp[i] = Math.Log(ReadFile.YMain[i]);
             }
 
             SLE();
-            YTempMaker();
-        }*/
+            CoeffTemp[0] = Math.Exp(CoeffTemp[0]);
+            
+            for (int _i = 0; _i < Watches; _i++)
+            {
+                YTemp[_i] += CoeffTemp[0] * Math.Pow(XTemp[_i, 1] , CoeffTemp[1]);
+            }
+
+            for (int i = 0; i < Watches; i++)
+                YTemp[i] = Math.Exp(YTemp[i]);
+        }
 
         public void EvalQual()
         {
@@ -266,14 +297,14 @@ namespace SecondProj
             RepresChart.Series["y esmitated"].ChartType = SeriesChartType.Line;
         }
 
-        public void ChartBuild(Chart _chart1, Regression _obj)
+        public void ChartBuild(Chart _chart, Regression _temp)
         {
-            Regression _temp = _obj;
+            
 
             for (int j = 0; j < Regression.Watches; j++)
             {
-                _chart1.Series["y esmitated"].Points.Add(_temp.YTemp[j], ReadFile.XMain[j, 1]);
-                _chart1.Series["y fact"].Points.Add(ReadFile.YMain[j], ReadFile.XMain[j, 1]);
+                _chart.Series["y esmitated"].Points.Add(_temp.YTemp[j], ReadFile.XMain[j, 1]);
+                _chart.Series["y fact"].Points.Add(ReadFile.YMain[j], ReadFile.XMain[j, 1]);
             }
         }
     }
