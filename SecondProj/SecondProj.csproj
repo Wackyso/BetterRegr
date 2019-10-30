@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ChartManager.cs" />
-    <Compile Include="Classes\ReadFile.cs" />
+    <Compile Include="Classes\FileReader.cs" />
     <Compile Include="Classes\Regression.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

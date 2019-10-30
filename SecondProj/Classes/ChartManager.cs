@@ -1,62 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.DataVisualization.Charting;
+﻿using System.Windows.Forms.DataVisualization.Charting;
 
 namespace SecondProj
 {
     public class ChartManager
     {
-        public readonly Chart LinearChart;
-        public readonly Chart ExpChart;
-        public readonly Chart PowerChart;
-        public readonly Chart RepresChart;
+        private Chart _linearChart;
+        private Chart _expChart;
+        private Chart _powerChart;
+        private Chart _represChart;
 
-        public ChartManager(Chart LinearChart, Chart ExpChart, Chart PowerChart, Chart RepresChart)
+        public ChartManager(Chart linearChart, Chart expChart, Chart powerChart, Chart represChart)
         {
-            this.LinearChart = LinearChart;
-            this.ExpChart = ExpChart;
-            this.PowerChart = PowerChart;
-            this.RepresChart = RepresChart;
+            _linearChart = linearChart;
+            _expChart = expChart;
+            _powerChart = powerChart;
+            _represChart = represChart;
         }
 
         public void FormChart()
         {
-            LinearChart.Series.Clear();
-            LinearChart.Series.Add("y fact");
-            LinearChart.Series.Add("y esmitated");
-            LinearChart.Series["y fact"].ChartType = SeriesChartType.Line;
-            LinearChart.Series["y esmitated"].ChartType = SeriesChartType.Line;
+            _linearChart.Series.Clear();
+            _linearChart.Series.Add("y fact");
+            _linearChart.Series.Add("y esmitated");
+            _linearChart.Series["y fact"].ChartType = SeriesChartType.Line;
+            _linearChart.Series["y esmitated"].ChartType = SeriesChartType.Line;
 
-            ExpChart.Series.Clear();
-            ExpChart.Series.Add("y fact");
-            ExpChart.Series.Add("y esmitated");
-            ExpChart.Series["y fact"].ChartType = SeriesChartType.Line;
-            ExpChart.Series["y esmitated"].ChartType = SeriesChartType.Line;
+            _expChart.Series.Clear();
+            _expChart.Series.Add("y fact");
+            _expChart.Series.Add("y esmitated");
+            _expChart.Series["y fact"].ChartType = SeriesChartType.Line;
+            _expChart.Series["y esmitated"].ChartType = SeriesChartType.Line;
 
-            PowerChart.Series.Clear();
-            PowerChart.Series.Add("y fact");
-            PowerChart.Series.Add("y esmitated");
-            PowerChart.Series["y fact"].ChartType = SeriesChartType.Line;
-            PowerChart.Series["y esmitated"].ChartType = SeriesChartType.Line;
+            _powerChart.Series.Clear();
+            _powerChart.Series.Add("y fact");
+            _powerChart.Series.Add("y esmitated");
+            _powerChart.Series["y fact"].ChartType = SeriesChartType.Line;
+            _powerChart.Series["y esmitated"].ChartType = SeriesChartType.Line;
 
-            RepresChart.Series.Clear();
-            RepresChart.Series.Add("y fact");
-            RepresChart.Series.Add("y esmitated");
-            RepresChart.Series["y fact"].ChartType = SeriesChartType.Line;
-            RepresChart.Series["y esmitated"].ChartType = SeriesChartType.Line;
+            _represChart.Series.Clear();
+            _represChart.Series.Add("y fact");
+            _represChart.Series.Add("y esmitated");
+            _represChart.Series["y fact"].ChartType = SeriesChartType.Line;
+            _represChart.Series["y esmitated"].ChartType = SeriesChartType.Line;
         }
 
-        public void ChartBuild(Chart _chart, Regression _temp)
+        public void ChartBuild(Chart chart, Regression regression)
         {
-
-
             for (int j = 0; j < Regression.Watches; j++)
             {
-                _chart.Series["y esmitated"].Points.Add(_temp.YTemp[j], ReadFile.XMain[j, 1]);
-                _chart.Series["y fact"].Points.Add(ReadFile.YMain[j], ReadFile.XMain[j, 1]);
+                chart.Series["y esmitated"].Points.Add(regression.Y[j], FileReader.XMain[j, 1]);
+                chart.Series["y fact"].Points.Add(FileReader.YMain[j], FileReader.XMain[j, 1]);
             }
         }
     }

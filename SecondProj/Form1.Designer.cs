@@ -51,7 +51,7 @@
             this.LinearChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ButTextInp = new System.Windows.Forms.Button();
             this.DescriptLabel = new System.Windows.Forms.Label();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.OneVarFourCharts = new System.Windows.Forms.Button();
             this.Back.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ExpChart)).BeginInit();
@@ -202,7 +202,7 @@
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog.FileName = "openFileDialog1";
             // 
             // OneVarFourCharts
             // 
@@ -245,7 +245,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart LinearChart;
         private System.Windows.Forms.Button ButTextInp;
         private System.Windows.Forms.Label DescriptLabel;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button OneVarFourCharts;
     }
 }

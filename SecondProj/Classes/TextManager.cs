@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace SecondProj
 {
@@ -13,7 +8,7 @@ namespace SecondProj
         {
             _label1.Text = $"Коеф. детерминации: {obj.Det}  \n" +
                           $"Ошибка аппроксимации: {obj.Aprox} \n" +
-                          $"Адекватна ли модель(F-stat) {obj.Fstat}\n" +
+                          $"Адекватна ли модель(F-stat) {obj.FStat}\n" +
                           $"Критерий Стьюдента: {obj.Stud}\n";
         }
     }

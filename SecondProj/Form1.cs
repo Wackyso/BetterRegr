@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -13,50 +6,51 @@ namespace SecondProj
 {
     public partial class Form1 : Form
     {
+        private const string FileFilter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
+
         public Form1()
         {
             InitializeComponent();
-
-            openFileDialog1.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
+            
+            openFileDialog.Filter = FileFilter;
         }
 
         private void ButTextInp_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+            var dialogResult = openFileDialog.ShowDialog();
+            
+            if (dialogResult == DialogResult.Cancel)
                 return;
 
-            string filename = openFileDialog1.FileName;
-            ReadFile.Lines = System.IO.File.ReadAllLines(filename);
-
-            ReadFile read = new ReadFile();
-            read.XYMaking();
-
-            
+            string filename = openFileDialog.FileName;
+            var lines = System.IO.File.ReadAllLines(filename);
+            var fileReader = new FileReader(lines);
+            fileReader.XYMaking();
         }
 
         private void OneVarFourCharts_Click(object sender, EventArgs e)
         {
-            ChartManager Charts = new ChartManager(LinearChart, ExpChart, PowerChart, RepresChart);
-            Charts.FormChart();
+            ChartManager charts = new ChartManager(LinearChart, ExpChart, PowerChart, RepresChart);
+            charts.FormChart();
 
             Regression linest = new Regression();
             linest.Linest();
-            Charts.ChartBuild(LinearChart, linest);
+            charts.ChartBuild(LinearChart, linest);
             TextManager.TextBuild(LinarLabel, linest);
 
             Regression exp = new Regression();
             exp.Exp();
-            Charts.ChartBuild(ExpChart, exp);
+            charts.ChartBuild(ExpChart, exp);
             TextManager.TextBuild(ExpLabel, exp);
 
             Regression power = new Regression();
             power.Power();
-            Charts.ChartBuild(PowerChart, power);
+            charts.ChartBuild(PowerChart, power);
             TextManager.TextBuild(PowerLabel, power);
 
             Regression repres = new Regression();
             repres.Repres();
-            Charts.ChartBuild(RepresChart, repres);
+            charts.ChartBuild(RepresChart, repres);
             TextManager.TextBuild(RepresLabel, repres);
         }
     }
