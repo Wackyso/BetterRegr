@@ -30,28 +30,14 @@ namespace SecondProj
 
         private void OneVarFourCharts_Click(object sender, EventArgs e)
         {
-            ChartManager charts = new ChartManager(LinearChart, ExpChart, PowerChart, RepresChart);
-            charts.FormChart();
-
-            Regression linest = new Regression();
-            linest.Linest();
-            charts.ChartBuild(LinearChart, linest);
-            TextManager.TextBuild(LinarLabel, linest);
-
-            Regression exp = new Regression();
-            exp.Exp();
-            charts.ChartBuild(ExpChart, exp);
-            TextManager.TextBuild(ExpLabel, exp);
-
-            Regression power = new Regression();
-            power.Power();
-            charts.ChartBuild(PowerChart, power);
-            TextManager.TextBuild(PowerLabel, power);
-
-            Regression repres = new Regression();
-            repres.Repres();
-            charts.ChartBuild(RepresChart, repres);
-            TextManager.TextBuild(RepresLabel, repres);
+            Form2 form = new Form2();
+            form.Show();
         }
+
+        private void MultiColl_Click(object sender, EventArgs e)
+        {
+            Form3 form = new Form3();
+            form.Show();
+        }   
     }
 }

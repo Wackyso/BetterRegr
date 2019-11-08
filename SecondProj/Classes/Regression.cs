@@ -14,6 +14,7 @@ namespace SecondProj
         public double Aprox = 0;
         public bool FStat;
         public string Stud;
+        public double[] elast;
 
         public Regression()
         {
@@ -21,6 +22,7 @@ namespace SecondProj
             X = new double[Watches, Variables];
             Coeff = new double[Variables];
             Average = new double[Variables];
+            elast = new double[Variables - 1];
         }
 
         public void Linest()
@@ -181,6 +183,18 @@ namespace SecondProj
                     Y[i] += X[i, _j] * Coeff[_j];
                 }
             }
+        }
+
+        public void Elast()
+        {
+
+        }
+
+        public double[,] Matrix()
+        {
+            double[,] matrix = new double[0,0];
+            
+            return matrix;
         }
     }
 }
