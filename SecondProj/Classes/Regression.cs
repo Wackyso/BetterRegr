@@ -1,11 +1,13 @@
 ﻿using System;
-
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using System.Collections.Generic;
 namespace SecondProj
 {
     public class Regression
     {
-        public static int Watches;
-        public static int Variables;
+        public int Watches = 0;
+        public int Variables = 0;
         public double[] Y;
         public double[,] X;
         public double[] Average;
@@ -15,25 +17,126 @@ namespace SecondProj
         public bool FStat;
         public string Stud;
         public double[] elast;
+        public double[] YMain;
+        public double[,] XMain;
+        public int FakeVarsNum;
+        public string[,] XMainFake;
+        public bool _key;
+        public string[] FakeVarsMas;
+        public int colum;
 
-        public Regression()
+        //public Regression()
+        //{
+        //    Y = new double[Watches];
+        //    X = new double[Watches, Variables];
+        //    Coeff = new double[Variables];
+        //    Average = new double[Variables];
+        //    elast = new double[Variables - 1];
+        //}
+
+        public void Analyt(string[] lines,Label txt, Chart linear,  string red = "")//перегрузка для всех моделей в которых более 1-й переменной
         {
+            _key = false; // ключ на наличие качественных переменных =1 значит есть 
+            FileReader file = new FileReader(lines);
+            if (string.Compare(red, "") != 0) { file = new FileReader(lines, red); _key = true; }
+
+            file.XYMaking();
+            if (_key) 
+            { 
+
+                FakeVarsNum = file.red_args.Count;
+                FakeVarsMas = new string[FakeVarsNum];
+                for (int i = 0; i < FakeVarsNum; i++)
+                    FakeVarsMas[i] = file.red_args[i];
+                XMainFake = file.XFake;
+            }
+            XMain = file.XMain;
+            
+            YMain = file.YMain;
+
+            if (_key)
+            {
+                Watches = file.Watches;
+                Variables = file.Variables +FakeVarsNum;
+                colum = file.ind;
+            }
+            else
+            {
+                Watches = file.Watches;
+                Variables = file.Variables;
+            }
+
+            
+
             Y = new double[Watches];
             X = new double[Watches, Variables];
             Coeff = new double[Variables];
             Average = new double[Variables];
             elast = new double[Variables - 1];
+
+            Linest();
+            ChartManager chart = new ChartManager(linear);
+            chart.FormChart();
+            chart.ChartBuild(linear, Y,file);
+            
+            //txt.Text = $"olololo {XMainFake[0,0]} { X[0, 0] } {X[0, 1]} {X[0, 2]} {X[0, 3]} {X[0, 4]} {X[1, 0]} {X[1, 1]}";
         }
 
-        public void Linest()
+        public void Analyt(string[] lines, Label txt, Chart linear,Chart Exp,Chart Power, Chart Repr) //перегрузка для стандартной линейной модели с 1м Х
+        {
+            _key = false; // ключ на наличие качественных переменных =1 значит есть 
+            FileReader file = new FileReader(lines);
+
+            file.XYMaking();
+            
+            XMain = file.XMain;
+
+            YMain = file.YMain;
+
+            Watches = file.Watches;
+            Variables = file.Variables;
+
+            Y = new double[Watches];
+            X = new double[Watches, Variables];
+            Coeff = new double[Variables];
+            Average = new double[Variables];
+            elast = new double[Variables - 1];
+
+            if (Variables == 2)
+            {
+                Linest();
+                ChartManager chart = new ChartManager(linear, Exp, Power, Repr);
+                chart.FormChart();
+                chart.ChartBuild(linear, Y, file);
+            }
+        }
+
+            public void Linest()
         {
             for (int i = 0; i < Watches; i++)
             {
                 for (int j = 0; j < Variables; j++)
-                    X[i, j] = FileReader.XMain[i, j];
-                Y[i] = FileReader.YMain[i];
+                {
+                    if (j >= Variables -FakeVarsNum)
+                    {
+                        X[i, j] = 0;
+                        for (int b = 0; b < colum; b++)
+                            if (string.Compare(XMainFake[i, b], FakeVarsMas[j-Variables+FakeVarsNum]) == 0)
+                                X[i, j] = 1;
+                                
+                    }
+                    else
+                        X[i, j] = XMain[i, j];//заполнение массива иксов стандартными переменнымии с начала и фиктивными в крайние ряды 
+                }
+                Y[i] = YMain[i];
             }
 
+            for (int i = 0; i < Watches; i++)
+            { 
+                for (int j=0;j<Variables;j++)
+                    Console.Write($"{X[i,j]} ");
+                Console.WriteLine();
+            }
             SLE();
             YTempMake();
 
@@ -45,8 +148,8 @@ namespace SecondProj
             for (int i = 0; i < Watches; i++)
             {
                 for (int j = 0; j < Variables; j++)
-                    X[i, j] = FileReader.XMain[i, j];
-                Y[i] = Math.Log(FileReader.YMain[i]);
+                    X[i, j] = XMain[i, j];
+                Y[i] = Math.Log(YMain[i]);
             }
 
             SLE();
@@ -64,8 +167,8 @@ namespace SecondProj
             for (int i = 0; i < Watches; i++)
             {
                 for (int j = 0; j < Variables; j++)
-                    X[i, j] = FileReader.XMain[i, j];
-                Y[i] = Math.Log(FileReader.YMain[i]);
+                    X[i, j] = XMain[i, j];
+                Y[i] = Math.Log(YMain[i]);
             }
 
             SLE();
@@ -84,8 +187,8 @@ namespace SecondProj
             for (int i = 0; i < Watches; i++)
             {
                 for (int j = 0; j < Variables; j++)
-                    X[i, j] = j==0 ? (1) : (Math.Log(FileReader.XMain[i, j]));
-                Y[i] = Math.Log(FileReader.YMain[i]);
+                    X[i, j] = j==0 ? (1) : (Math.Log(XMain[i, j]));
+                Y[i] = Math.Log(YMain[i]);
             }
 
             SLE();
@@ -93,7 +196,7 @@ namespace SecondProj
 
             for (int i = 0; i < Watches; i++)
             {
-                Y[i] = Coeff[0] * Math.Pow(FileReader.XMain[i, 1], Coeff[1]);
+                Y[i] = Coeff[0] * Math.Pow(XMain[i, 1], Coeff[1]);
             }
 
             EvalQual();
@@ -159,15 +262,15 @@ namespace SecondProj
             
             for(int i = 0; i < Watches; i++)
             {
-                nom += Math.Pow(FileReader.YMain[i] - Y[i], 2);
-                denom += Math.Pow(FileReader.YMain[i] - Average[0], 2);
+                nom += Math.Pow(YMain[i] - Y[i], 2);
+                denom += Math.Pow(YMain[i] - Average[0], 2);
             }
 
             Det = 1 - nom / denom;
 
             for (int i = 0; i < Watches; i++)
             {
-                Aprox += Math.Abs((FileReader.YMain[i] - Y[i])/ FileReader.YMain[i]);
+                Aprox += Math.Abs((YMain[i] - Y[i])/ YMain[i]);
             }
             
             Aprox /= Watches;

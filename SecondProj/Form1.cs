@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 
 namespace SecondProj
@@ -7,11 +8,19 @@ namespace SecondProj
     public partial class Form1 : Form
     {
         private const string FileFilter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
-
+        static private string[] lines; 
         public Form1()
         {
             InitializeComponent();
-            
+
+            ButtYes1.Hide();
+            ButtNo1.Hide();
+            ButtYes2.Hide();
+            ButtNo2.Hide();
+            InputRedBox.Hide();
+            InputRedButt.Hide();
+            InputRedTextAsk.Hide();
+
             openFileDialog.Filter = FileFilter;
         }
 
@@ -23,21 +32,43 @@ namespace SecondProj
                 return;
 
             string filename = openFileDialog.FileName;
-            var lines = System.IO.File.ReadAllLines(filename);
-            var fileReader = new FileReader(lines);
-            fileReader.XYMaking();
+            lines = System.IO.File.ReadAllLines(filename);
+
+            ButTextInp.Hide();
+            TextFileReader.Text = "Есть ли качественные признаки или факторы среди данных?";
+            ButtYes1.Show();
+            ButtNo1.Show();
+
+            //Regression reg = new Regression();
+            //reg.Analyt(lines);
+
+            //TextFileReader.Text = "Есть ли структурные сдвиги в данной модели?";
         }
 
-        private void OneVarFourCharts_Click(object sender, EventArgs e)
+        private void ButtYes1_Click(object sender, EventArgs e)
         {
-            Form2 form = new Form2();
-            form.Show();
+            InputRedBox.Show();
+            InputRedButt.Show();
+            InputRedTextAsk.Show();
         }
 
-        private void MultiColl_Click(object sender, EventArgs e)
+        private void ButtNo1_Click(object sender, EventArgs e)
         {
-            Form3 form = new Form3();
-            form.Show();
-        }   
+            ButtYes1.Hide();
+            ButtNo1.Hide();
+            
+            //ButtYes2.Show();
+            //ButtNo2.Show();
+
+            Regression reg = new Regression();
+            reg.Analyt(lines, InputRedTextAsk, LinearChart);
+        }
+
+        private void InputRedButt_Click(object sender, EventArgs e)
+        {
+            Regression reg = new Regression();
+            string red = InputRedBox.Text;
+            reg.Analyt(lines,InputRedTextAsk,LinearChart, red);
+        }
     }
 }

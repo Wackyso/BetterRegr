@@ -59,12 +59,12 @@ namespace SecondProj
             }
         }
 
-        public void ChartBuild(Chart chart, Regression regression)
+        public void ChartBuild(Chart chart, double[]Y, FileReader file)
         {
-            for (int j = 0; j < Regression.Watches; j++)
+            for (int j = 0; j < file.Watches; j++)
             {
-                chart.Series["y esmitated"].Points.Add(regression.Y[j], FileReader.XMain[j, 1]);
-                chart.Series["y fact"].Points.Add(FileReader.YMain[j], FileReader.XMain[j, 1]);
+                chart.Series["y esmitated"].Points.Add(Y[j], file.XMain[j, 1]);
+                chart.Series["y fact"].Points.Add(file.YMain[j], file.XMain[j, 1]);
             }
         }
     }
