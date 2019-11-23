@@ -70,6 +70,8 @@ namespace SecondProj
             //Regression reg = new Regression();
             reg.Analyt(lines, InputRedTextAsk, LinearChart);
 
+            TextManager.TextBuild(LinarLabel, reg);
+
             ShiftText.Show();
             ShiftTextBox.Show();
             ShiftTextButt.Show();
@@ -102,6 +104,13 @@ namespace SecondProj
             reg.Shifts = Shift;
 
             reg.Analyt(lines, InputRedTextAsk, ExpChart);
+        }
+
+        private void MultCheck_Click(object sender, EventArgs e)
+        {
+            if(reg.XsquareCheck()) reg.MultiColl(PowerChart);
+            
+            TextManager.TextBuild(ExpLabel, reg);
         }
     }
 }

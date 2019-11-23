@@ -27,12 +27,14 @@ namespace SecondProj
         public bool ShiftKey;
         public int Shift;
         public string Shifts;
+        public ChartManager chart;
+        public FileReader file;
 
 
         public void Analyt(string[] lines,Label txt, Chart linear,  string red = "")//перегрузка для всех моделей в которых более 1-й переменной
         {
             _key = false; // ключ на наличие качественных переменных =1 значит есть 
-            FileReader file = new FileReader(lines);
+            file = new FileReader(lines);
             if (string.Compare(red, "") != 0) { file = new FileReader(lines, red); _key = true; }
 
             if (string.Compare(Shifts, "") != 0 && ShiftKey)
@@ -80,7 +82,8 @@ namespace SecondProj
             elast = new double[Variables - 1];
 
             Linest();
-            ChartManager chart = new ChartManager(linear);
+            
+            chart = new ChartManager(linear);
             chart.FormChart();
             chart.ChartBuild(linear, Y,file);
             
@@ -125,7 +128,7 @@ namespace SecondProj
             }
         }
 
-            public void Linest()
+        public void Linest()
         {
             for (int i = 0; i < Watches; i++)
             {
@@ -133,14 +136,14 @@ namespace SecondProj
                 {
                     if (ShiftKey)
                     {
-                        if (j >= (Variables - FakeVarsNum)/2)
+                        if (j >= (Variables - FakeVarsNum) / 2)
                         {
-                            if (j>= (Variables - FakeVarsNum) / 2 + FakeVarsNum)
+                            if (j >= (Variables - FakeVarsNum) / 2 + FakeVarsNum)
                             {
-                                if (i > Shift) X[i, j] = X[i, j] = XMain[i, j-Variables/2-FakeVarsNum]; else X[i, j] = 0;
+                                if (i > Shift) X[i, j] = XMain[i, j - Variables / 2 - FakeVarsNum]; else X[i, j] = 0;
                             }
                             else
-                            X[i, j] = 0;
+                                X[i, j] = 0;
                             for (int b = 0; b < colum; b++)
                                 if (string.Compare(XMainFake[i, b], FakeVarsMas[j - Variables + FakeVarsNum]) == 0)
                                     X[i, j] = 1;
@@ -151,24 +154,23 @@ namespace SecondProj
                         X[i, 0] = 1;
                     }
                     else
-                    if (j >= Variables -FakeVarsNum)
+                    if (j >= Variables - FakeVarsNum)
                     {
                         X[i, j] = 0;
                         for (int b = 0; b < colum; b++)
-                            if (string.Compare(XMainFake[i, b], FakeVarsMas[j-Variables+FakeVarsNum]) == 0)
+                            if (string.Compare(XMainFake[i, b], FakeVarsMas[j - Variables + FakeVarsNum]) == 0)
                                 X[i, j] = 1;
-                                
+
                     }
                     else
                         X[i, j] = XMain[i, j];//заполнение массива иксов стандартными переменнымии с начала и фиктивными в крайние ряды 
                 }
                 Y[i] = YMain[i];
             }
-
+        
             SLE();
             YTempMake();
-
-            EvalQual();
+            double d = EvalQual();
         }
 
         public void Exp()
@@ -235,6 +237,7 @@ namespace SecondProj
             double a = 0;
             double c = 0;
             double[,] sl = new double[Variables, Variables];
+            //Coeff = new double[Variables];
 
             for (int i = 0; i < Variables; i++)
             {
@@ -252,6 +255,8 @@ namespace SecondProj
                 }
 
             }
+
+          
 
             Average[0] = Coeff[0];
             for (int i = 1; i < Variables; i++)
@@ -283,7 +288,7 @@ namespace SecondProj
             }
         }
         
-        private void EvalQual()
+        private double EvalQual()//р квадрат коеф детерминации 
         {
             double nom = 0;
             double denom = 0;
@@ -302,6 +307,7 @@ namespace SecondProj
             }
             
             Aprox /= Watches;
+            return Det;
         }
 
         private void YTempMake()
@@ -326,6 +332,95 @@ namespace SecondProj
             double[,] matrix = new double[0,0];
             
             return matrix;
+        }
+
+        public bool XsquareCheck()
+        {
+            double[,] XTab;
+           
+            double XX = ((Watches - 1) * (2 * Variables + 3) / 6) * Math.Log(Math.Pow(Det,0.5));
+           /* if (XX < XTab[5, (Variables - 1) * (Variables - 2) / 2]) return false;
+            else*/ return true;
+        }
+
+        public void MultiColl(Chart linear)//большая погрешность вычислений, узнать как уменьшить, иначее полностью бесполезный метод. Так что пока я решил хер забить на эту ебанину, потому что проебал уже натуралньо 3 часа в пустую на поиск ошибки, с теорией в этом методе все хорошо.
+        {
+            
+            double[] Rs = new double[Variables];
+            for (int i=1; i<Variables;i++)
+            {
+                Rs[i] = 0;
+                for (int j=1;j< Variables; j++)
+                {
+                    double _x = 0;
+                    double _y = 0;
+                    double _y2 = 0;
+                    if (i != j)
+                    {
+                        for (int k = 0; k < Watches; k++)
+                        {
+                            _x += (X[k, i] - Average[i]) * (X[k, j] - Average[j]);
+                            _y += Math.Pow((X[k, i] - Average[i]), 2);
+                            _y2 += Math.Pow((X[k, j] - Average[j]), 2);
+                        }
+                        Rs[i] += Math.Abs(_x / Math.Pow(_y * _y2, 0.5));
+                    }
+                }
+            }
+            int l = 0;
+            double p1 = 0;
+            for (int i=1;i<Variables;i++)
+            {
+                if (p1 < Rs[i])
+                { 
+                    l = i; 
+                    p1 = Rs[i]; 
+                }
+            }
+
+            double a;
+
+            double[] p = new double[Watches];
+            for (int i = 0; i < Watches; i++)
+            {
+                p[i] = X[i, l];
+                for (int j = 0; j < Variables; j++)
+                {
+                    X[i, j] /= p[i];
+                }
+                a = X[i, l];
+                X[i, l] = X[i, 0];
+                X[i, 0] = a;
+                Y[i] /= p[i];
+            }
+            SLE();
+
+
+            
+            for (int i = 0; i < Watches; i++)
+            {
+                for (int j = 0; j < Variables; j++)
+                {
+                    X[i, j] *= p[i];
+                }
+            }
+
+            
+
+            YTempMake();
+            EvalQual();
+
+            
+
+            TextManager text = new TextManager();
+            chart = new ChartManager(linear);
+            chart.FormChart();
+            chart.ChartBuild(linear, Y, file);
+        }
+
+        public void AutoCorr()
+        {
+
         }
     }
 }
