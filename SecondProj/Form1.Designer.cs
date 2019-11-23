@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea17 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend17 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea18 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend18 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea19 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend19 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea20 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend20 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Back = new System.Windows.Forms.Panel();
             this.InputRedTextAsk = new System.Windows.Forms.Label();
             this.InputRedButt = new System.Windows.Forms.Button();
@@ -59,6 +59,9 @@
             this.ButTextInp = new System.Windows.Forms.Button();
             this.TextFileReader = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.ShiftText = new System.Windows.Forms.Label();
+            this.ShiftTextBox = new System.Windows.Forms.TextBox();
+            this.ShiftTextButt = new System.Windows.Forms.Button();
             this.Back.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RepresChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PowerChart)).BeginInit();
@@ -68,6 +71,9 @@
             // 
             // Back
             // 
+            this.Back.Controls.Add(this.ShiftTextButt);
+            this.Back.Controls.Add(this.ShiftTextBox);
+            this.Back.Controls.Add(this.ShiftText);
             this.Back.Controls.Add(this.InputRedTextAsk);
             this.Back.Controls.Add(this.InputRedButt);
             this.Back.Controls.Add(this.InputRedBox);
@@ -87,13 +93,13 @@
             this.Back.Controls.Add(this.TextFileReader);
             this.Back.Location = new System.Drawing.Point(-2, -2);
             this.Back.Name = "Back";
-            this.Back.Size = new System.Drawing.Size(1620, 968);
+            this.Back.Size = new System.Drawing.Size(2261, 1241);
             this.Back.TabIndex = 0;
             // 
             // InputRedTextAsk
             // 
             this.InputRedTextAsk.AutoSize = true;
-            this.InputRedTextAsk.Location = new System.Drawing.Point(10, 317);
+            this.InputRedTextAsk.Location = new System.Drawing.Point(14, 273);
             this.InputRedTextAsk.Name = "InputRedTextAsk";
             this.InputRedTextAsk.Size = new System.Drawing.Size(456, 100);
             this.InputRedTextAsk.TabIndex = 31;
@@ -103,9 +109,9 @@
             // 
             // InputRedButt
             // 
-            this.InputRedButt.Location = new System.Drawing.Point(14, 423);
+            this.InputRedButt.Location = new System.Drawing.Point(18, 430);
             this.InputRedButt.Name = "InputRedButt";
-            this.InputRedButt.Size = new System.Drawing.Size(147, 50);
+            this.InputRedButt.Size = new System.Drawing.Size(263, 95);
             this.InputRedButt.TabIndex = 30;
             this.InputRedButt.Text = "Ввести";
             this.InputRedButt.UseVisualStyleBackColor = true;
@@ -113,9 +119,9 @@
             // 
             // InputRedBox
             // 
-            this.InputRedBox.Location = new System.Drawing.Point(14, 391);
+            this.InputRedBox.Location = new System.Drawing.Point(18, 388);
             this.InputRedBox.Name = "InputRedBox";
-            this.InputRedBox.Size = new System.Drawing.Size(200, 26);
+            this.InputRedBox.Size = new System.Drawing.Size(285, 26);
             this.InputRedBox.TabIndex = 29;
             // 
             // ButtNo2
@@ -158,102 +164,102 @@
             // 
             // RepresLabel
             // 
-            this.RepresLabel.Location = new System.Drawing.Point(1362, 627);
+            this.RepresLabel.Location = new System.Drawing.Point(1860, 824);
             this.RepresLabel.Name = "RepresLabel";
-            this.RepresLabel.Size = new System.Drawing.Size(256, 314);
+            this.RepresLabel.Size = new System.Drawing.Size(387, 408);
             this.RepresLabel.TabIndex = 23;
             this.RepresLabel.Text = "label5";
             // 
             // PowerLabel
             // 
-            this.PowerLabel.Location = new System.Drawing.Point(1092, 627);
+            this.PowerLabel.Location = new System.Drawing.Point(1471, 824);
             this.PowerLabel.Name = "PowerLabel";
-            this.PowerLabel.Size = new System.Drawing.Size(252, 314);
+            this.PowerLabel.Size = new System.Drawing.Size(383, 408);
             this.PowerLabel.TabIndex = 22;
             this.PowerLabel.Text = "label4";
             // 
             // ExpLabel
             // 
-            this.ExpLabel.Location = new System.Drawing.Point(538, 627);
+            this.ExpLabel.Location = new System.Drawing.Point(1086, 824);
             this.ExpLabel.Name = "ExpLabel";
-            this.ExpLabel.Size = new System.Drawing.Size(248, 314);
+            this.ExpLabel.Size = new System.Drawing.Size(379, 408);
             this.ExpLabel.TabIndex = 21;
             this.ExpLabel.Text = "label3";
             // 
             // LinarLabel
             // 
-            this.LinarLabel.Location = new System.Drawing.Point(807, 625);
+            this.LinarLabel.Location = new System.Drawing.Point(697, 824);
             this.LinarLabel.Name = "LinarLabel";
-            this.LinarLabel.Size = new System.Drawing.Size(252, 314);
+            this.LinarLabel.Size = new System.Drawing.Size(383, 408);
             this.LinarLabel.TabIndex = 20;
             this.LinarLabel.Text = "label2";
             // 
             // RepresChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.RepresChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.RepresChart.Legends.Add(legend1);
-            this.RepresChart.Location = new System.Drawing.Point(1096, 308);
+            chartArea17.Name = "ChartArea1";
+            this.RepresChart.ChartAreas.Add(chartArea17);
+            legend17.Name = "Legend1";
+            this.RepresChart.Legends.Add(legend17);
+            this.RepresChart.Location = new System.Drawing.Point(1533, 379);
             this.RepresChart.Name = "RepresChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.RepresChart.Series.Add(series1);
-            this.RepresChart.Size = new System.Drawing.Size(521, 279);
+            series17.ChartArea = "ChartArea1";
+            series17.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series17.Legend = "Legend1";
+            series17.Name = "Series1";
+            this.RepresChart.Series.Add(series17);
+            this.RepresChart.Size = new System.Drawing.Size(717, 359);
             this.RepresChart.TabIndex = 19;
             this.RepresChart.Text = "chart3";
             // 
             // PowerChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.PowerChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.PowerChart.Legends.Add(legend2);
-            this.PowerChart.Location = new System.Drawing.Point(538, 308);
+            chartArea18.Name = "ChartArea1";
+            this.PowerChart.ChartAreas.Add(chartArea18);
+            legend18.Name = "Legend1";
+            this.PowerChart.Legends.Add(legend18);
+            this.PowerChart.Location = new System.Drawing.Point(810, 379);
             this.PowerChart.Name = "PowerChart";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.PowerChart.Series.Add(series2);
-            this.PowerChart.Size = new System.Drawing.Size(521, 279);
+            series18.ChartArea = "ChartArea1";
+            series18.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series18.Legend = "Legend1";
+            series18.Name = "Series1";
+            this.PowerChart.Series.Add(series18);
+            this.PowerChart.Size = new System.Drawing.Size(717, 359);
             this.PowerChart.TabIndex = 18;
             this.PowerChart.Text = "chart2";
             // 
             // ExpChart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.ExpChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.ExpChart.Legends.Add(legend3);
-            this.ExpChart.Location = new System.Drawing.Point(1096, 2);
+            chartArea19.Name = "ChartArea1";
+            this.ExpChart.ChartAreas.Add(chartArea19);
+            legend19.Name = "Legend1";
+            this.ExpChart.Legends.Add(legend19);
+            this.ExpChart.Location = new System.Drawing.Point(1533, 14);
             this.ExpChart.Name = "ExpChart";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.ExpChart.Series.Add(series3);
-            this.ExpChart.Size = new System.Drawing.Size(521, 279);
+            series19.ChartArea = "ChartArea1";
+            series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series19.Legend = "Legend1";
+            series19.Name = "Series1";
+            this.ExpChart.Series.Add(series19);
+            this.ExpChart.Size = new System.Drawing.Size(717, 359);
             this.ExpChart.TabIndex = 17;
             this.ExpChart.Text = "chart4";
             // 
             // LinearChart
             // 
-            chartArea4.Name = "ChartArea1";
-            this.LinearChart.ChartAreas.Add(chartArea4);
+            chartArea20.Name = "ChartArea1";
+            this.LinearChart.ChartAreas.Add(chartArea20);
             this.LinearChart.Cursor = System.Windows.Forms.Cursors.Default;
-            legend4.Name = "Legend1";
-            this.LinearChart.Legends.Add(legend4);
-            this.LinearChart.Location = new System.Drawing.Point(538, 2);
+            legend20.Name = "Legend1";
+            this.LinearChart.Legends.Add(legend20);
+            this.LinearChart.Location = new System.Drawing.Point(810, 14);
             this.LinearChart.Name = "LinearChart";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.LinearChart.Series.Add(series4);
-            this.LinearChart.Size = new System.Drawing.Size(521, 279);
+            series20.ChartArea = "ChartArea1";
+            series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series20.Legend = "Legend1";
+            series20.Name = "Series1";
+            this.LinearChart.Series.Add(series20);
+            this.LinearChart.Size = new System.Drawing.Size(717, 359);
             this.LinearChart.TabIndex = 16;
             this.LinearChart.Text = "chart1";
             // 
@@ -282,11 +288,38 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
+            // ShiftText
+            // 
+            this.ShiftText.AutoSize = true;
+            this.ShiftText.Location = new System.Drawing.Point(14, 538);
+            this.ShiftText.Name = "ShiftText";
+            this.ShiftText.Size = new System.Drawing.Size(418, 100);
+            this.ShiftText.TabIndex = 32;
+            this.ShiftText.Text = "Есть ли структурные сдвиги в данной модели?\r\nВведите номер наблюдения, с которого" +
+    " пошел сдвиг\r\n\r\n\r\n\r\n";
+            // 
+            // ShiftTextBox
+            // 
+            this.ShiftTextBox.Location = new System.Drawing.Point(18, 652);
+            this.ShiftTextBox.Name = "ShiftTextBox";
+            this.ShiftTextBox.Size = new System.Drawing.Size(285, 26);
+            this.ShiftTextBox.TabIndex = 33;
+            // 
+            // ShiftTextButt
+            // 
+            this.ShiftTextButt.Location = new System.Drawing.Point(18, 684);
+            this.ShiftTextButt.Name = "ShiftTextButt";
+            this.ShiftTextButt.Size = new System.Drawing.Size(263, 95);
+            this.ShiftTextButt.TabIndex = 34;
+            this.ShiftTextButt.Text = "Ввести";
+            this.ShiftTextButt.UseVisualStyleBackColor = true;
+            this.ShiftTextButt.Click += new System.EventHandler(this.ShiftTextButt_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1618, 963);
+            this.ClientSize = new System.Drawing.Size(2260, 1239);
             this.Controls.Add(this.Back);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -321,6 +354,9 @@
         private System.Windows.Forms.Button InputRedButt;
         private System.Windows.Forms.TextBox InputRedBox;
         private System.Windows.Forms.Label InputRedTextAsk;
+        private System.Windows.Forms.Button ShiftTextButt;
+        private System.Windows.Forms.TextBox ShiftTextBox;
+        private System.Windows.Forms.Label ShiftText;
     }
 }
 

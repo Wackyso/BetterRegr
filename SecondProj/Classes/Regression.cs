@@ -24,21 +24,22 @@ namespace SecondProj
         public bool _key;
         public string[] FakeVarsMas;
         public int colum;
+        public bool ShiftKey;
+        public int Shift;
+        public string Shifts;
 
-        //public Regression()
-        //{
-        //    Y = new double[Watches];
-        //    X = new double[Watches, Variables];
-        //    Coeff = new double[Variables];
-        //    Average = new double[Variables];
-        //    elast = new double[Variables - 1];
-        //}
 
         public void Analyt(string[] lines,Label txt, Chart linear,  string red = "")//перегрузка для всех моделей в которых более 1-й переменной
         {
             _key = false; // ключ на наличие качественных переменных =1 значит есть 
             FileReader file = new FileReader(lines);
             if (string.Compare(red, "") != 0) { file = new FileReader(lines, red); _key = true; }
+
+            if (string.Compare(Shifts, "") != 0 && ShiftKey)
+            {
+                string[] Shiftsa = Shifts.Split(' ', '	');
+                this.Shift = Convert.ToInt32(Shiftsa[0]);
+            }
 
             file.XYMaking();
             if (_key) 
@@ -57,13 +58,17 @@ namespace SecondProj
             if (_key)
             {
                 Watches = file.Watches;
-                Variables = file.Variables +FakeVarsNum;
+                if (ShiftKey)
+                    Variables = file.Variables*2 + FakeVarsNum;//каждый сдвиг удваивает количество переменных(множественные сдвиги это пиздец, нужно будет описывать с помощью рекурсии каждый параметр, которых уже на втором сдвиге будет в 4 раза больше, то есть минимум 8 с константой)
+                else
+                    Variables = file.Variables + FakeVarsNum;
                 colum = file.ind;
             }
             else
             {
                 Watches = file.Watches;
-                Variables = file.Variables;
+                if (ShiftKey) Variables = file.Variables * 2;
+                else Variables = file.Variables;
             }
 
             
@@ -79,13 +84,19 @@ namespace SecondProj
             chart.FormChart();
             chart.ChartBuild(linear, Y,file);
             
-            //txt.Text = $"olololo {XMainFake[0,0]} { X[0, 0] } {X[0, 1]} {X[0, 2]} {X[0, 3]} {X[0, 4]} {X[1, 0]} {X[1, 1]}";
+            if (ShiftKey)txt.Text = $"olololo {X[0,0]} { X[0, 1] } {X[0, 2]} {X[0, 3]} {X[10, 0]} {X[10, 1]} {X[10, 2]} {X[10, 3]}";
         }
 
         public void Analyt(string[] lines, Label txt, Chart linear,Chart Exp,Chart Power, Chart Repr) //перегрузка для стандартной линейной модели с 1м Х
         {
             _key = false; // ключ на наличие качественных переменных =1 значит есть 
             FileReader file = new FileReader(lines);
+
+            if (string.Compare(Shifts, "") != 0 && ShiftKey)
+            {
+                string[] Shiftsa = Shifts.Split(' ', '	');
+                this.Shift = Convert.ToInt32(Shiftsa[0]);
+            }
 
             file.XYMaking();
             
@@ -94,7 +105,10 @@ namespace SecondProj
             YMain = file.YMain;
 
             Watches = file.Watches;
-            Variables = file.Variables;
+            if (ShiftKey)
+                Variables = file.Variables*2;
+            else
+                Variables = file.Variables;
 
             Y = new double[Watches];
             X = new double[Watches, Variables];
@@ -117,6 +131,26 @@ namespace SecondProj
             {
                 for (int j = 0; j < Variables; j++)
                 {
+                    if (ShiftKey)
+                    {
+                        if (j >= (Variables - FakeVarsNum)/2)
+                        {
+                            if (j>= (Variables - FakeVarsNum) / 2 + FakeVarsNum)
+                            {
+                                if (i > Shift) X[i, j] = X[i, j] = XMain[i, j-Variables/2-FakeVarsNum]; else X[i, j] = 0;
+                            }
+                            else
+                            X[i, j] = 0;
+                            for (int b = 0; b < colum; b++)
+                                if (string.Compare(XMainFake[i, b], FakeVarsMas[j - Variables + FakeVarsNum]) == 0)
+                                    X[i, j] = 1;
+
+                        }
+                        else
+                           if (i <= Shift) X[i, j] = XMain[i, j]; else X[i, j] = 0;
+                        X[i, 0] = 1;
+                    }
+                    else
                     if (j >= Variables -FakeVarsNum)
                     {
                         X[i, j] = 0;
@@ -131,12 +165,6 @@ namespace SecondProj
                 Y[i] = YMain[i];
             }
 
-            for (int i = 0; i < Watches; i++)
-            { 
-                for (int j=0;j<Variables;j++)
-                    Console.Write($"{X[i,j]} ");
-                Console.WriteLine();
-            }
             SLE();
             YTempMake();
 

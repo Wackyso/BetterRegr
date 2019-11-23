@@ -23,7 +23,7 @@ namespace SecondProj
         public FileReader(string[] lines, string red_)
         {
             _lines = lines;
-            string[] red1 = red_.Split(' ', '	');
+             string[] red1 = red_.Split(' ', '	');
             
             red = new int[red1.Length];
             for (int j = 0; j < red1.Length; j++)

@@ -8,7 +8,9 @@ namespace SecondProj
     public partial class Form1 : Form
     {
         private const string FileFilter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
-        static private string[] lines; 
+        static private string[] lines;
+        string red;
+        public Regression reg = new Regression();
         public Form1()
         {
             InitializeComponent();
@@ -20,8 +22,13 @@ namespace SecondProj
             InputRedBox.Hide();
             InputRedButt.Hide();
             InputRedTextAsk.Hide();
+            ShiftText.Hide();
+            ShiftTextBox.Hide();
+            ShiftTextButt.Hide();
 
             openFileDialog.Filter = FileFilter;
+
+            
         }
 
         private void ButTextInp_Click(object sender, EventArgs e)
@@ -39,7 +46,7 @@ namespace SecondProj
             ButtYes1.Show();
             ButtNo1.Show();
 
-            //Regression reg = new Regression();
+            reg = new Regression();
             //reg.Analyt(lines);
 
             //TextFileReader.Text = "Есть ли структурные сдвиги в данной модели?";
@@ -60,15 +67,41 @@ namespace SecondProj
             //ButtYes2.Show();
             //ButtNo2.Show();
 
-            Regression reg = new Regression();
+            //Regression reg = new Regression();
             reg.Analyt(lines, InputRedTextAsk, LinearChart);
+
+            ShiftText.Show();
+            ShiftTextBox.Show();
+            ShiftTextButt.Show();
         }
 
         private void InputRedButt_Click(object sender, EventArgs e)
         {
-            Regression reg = new Regression();
-            string red = InputRedBox.Text;
+            reg = new Regression();
+            red = InputRedBox.Text;
             reg.Analyt(lines,InputRedTextAsk,LinearChart, red);
+
+            InputRedBox.Hide();
+            InputRedButt.Hide();
+            InputRedTextAsk.Hide();
+
+            ShiftText.Show();
+            ShiftTextBox.Show();
+            ShiftTextButt.Show();
+        }
+
+        private void ShiftTextButt_Click(object sender, EventArgs e)
+        {
+            ShiftText.Hide();
+            ShiftTextBox.Hide();
+            ShiftTextButt.Hide();
+            InputRedTextAsk.Show();
+            string Shift = InputRedBox.Text;
+
+            reg.ShiftKey = true;
+            reg.Shifts = Shift;
+
+            reg.Analyt(lines, InputRedTextAsk, ExpChart);
         }
     }
 }
