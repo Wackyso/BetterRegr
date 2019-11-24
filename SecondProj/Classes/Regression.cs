@@ -418,7 +418,44 @@ namespace SecondProj
             chart.ChartBuild(linear, Y, file);
         }
 
-        public void AutoCorr()
+        public void AutoCorrCheck() // проверка на автокорреляцию
+        {
+            double[] E= new double[Watches];
+            double[] ESi = new double[Watches];
+
+            double Vtab=Math.Round(Watches/2+1-1.96*Math.Pow(Watches-1,0.5));
+            double Ktab=1.43*Math.Log(Watches-1);
+            double Vem=0;
+            double Kem=0;
+
+            for (int i = 0; i < Watches; i++)
+                E[i] = YMain[i] - Y[i];
+
+            for (int i=0;i<Watches;i++)
+                if (E[i]>0)
+                {
+                    ESi[i] = 1;
+                    if (i > 10)
+                        if (ESi[i] == ESi[i - 1])
+                            Vem += 1;
+                        else
+                            Kem += 1;
+                }
+            if (Vem > Vtab && Kem < Ktab)
+                AutoCorr(E);
+        }
+
+        public void AutoCorr(double[] E)//устранение автокорреляции
+        {
+
+        }
+
+        public void GeteroSkedCheck()//проверка на гетероскедостичность 
+        {
+
+        }
+
+        public void GeteroSked()//устранение гетероскедостичности
         {
 
         }
