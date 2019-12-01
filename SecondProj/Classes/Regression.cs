@@ -592,7 +592,7 @@ namespace SecondProj
                         else
                             x1[i, j] = 0;
                     else
-                        if (j >= Variables)
+                        if (j > Variables)
                             x1[i, j] = _x[i, j - Variables];
                         else 
                             x1[i, j]=0;
