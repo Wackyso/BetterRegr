@@ -108,9 +108,19 @@ namespace SecondProj
 
         private void MultCheck_Click(object sender, EventArgs e)
         {
-            if(reg.XsquareCheck()) reg.MultiColl(PowerChart);
-            
+            reg.XsquareCheck(PowerChart);
             TextManager.TextBuild(ExpLabel, reg);
+        }
+
+        private void GeteroskedCheckButt_Click(object sender, EventArgs e)
+        {
+            reg.XsquareCheck(RepresChart);
+            reg.AutoCorrCheck(ExpChart);
+        }
+
+        private void AutocorrCheckButt_Click(object sender, EventArgs e)
+        {
+            reg.AutoCorrCheck(ExpChart);
         }
     }
 }

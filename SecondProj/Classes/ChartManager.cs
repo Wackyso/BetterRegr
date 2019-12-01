@@ -62,9 +62,10 @@ namespace SecondProj
         public void ChartBuild(Chart chart, double[]Y, FileReader file)
         {
             for (int j = 0; j < file.Watches; j++)
+
             {
-                chart.Series["y esmitated"].Points.Add(Y[j], file.XMain[j, 1]);
-                chart.Series["y fact"].Points.Add(file.YMain[j], file.XMain[j, 1]);
+                chart.Series["y esmitated"].Points.Add(Y[j], j);
+                chart.Series["y fact"].Points.Add(file.YMain[j], j);
             }
         }
     }

@@ -41,6 +41,8 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Back = new System.Windows.Forms.Panel();
+            this.GeteroskedCheckButt = new System.Windows.Forms.Button();
+            this.MultCheck = new System.Windows.Forms.Button();
             this.ShiftTextButt = new System.Windows.Forms.Button();
             this.ShiftTextBox = new System.Windows.Forms.TextBox();
             this.ShiftText = new System.Windows.Forms.Label();
@@ -62,7 +64,7 @@
             this.ButTextInp = new System.Windows.Forms.Button();
             this.TextFileReader = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.MultCheck = new System.Windows.Forms.Button();
+            this.AutocorrCheckButt = new System.Windows.Forms.Button();
             this.Back.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RepresChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PowerChart)).BeginInit();
@@ -72,6 +74,8 @@
             // 
             // Back
             // 
+            this.Back.Controls.Add(this.AutocorrCheckButt);
+            this.Back.Controls.Add(this.GeteroskedCheckButt);
             this.Back.Controls.Add(this.MultCheck);
             this.Back.Controls.Add(this.ShiftTextButt);
             this.Back.Controls.Add(this.ShiftTextBox);
@@ -97,6 +101,26 @@
             this.Back.Name = "Back";
             this.Back.Size = new System.Drawing.Size(2261, 1241);
             this.Back.TabIndex = 0;
+            // 
+            // GeteroskedCheckButt
+            // 
+            this.GeteroskedCheckButt.Location = new System.Drawing.Point(18, 950);
+            this.GeteroskedCheckButt.Name = "GeteroskedCheckButt";
+            this.GeteroskedCheckButt.Size = new System.Drawing.Size(263, 95);
+            this.GeteroskedCheckButt.TabIndex = 36;
+            this.GeteroskedCheckButt.Text = "Проверка на гетероскедостичность";
+            this.GeteroskedCheckButt.UseVisualStyleBackColor = true;
+            this.GeteroskedCheckButt.Click += new System.EventHandler(this.GeteroskedCheckButt_Click);
+            // 
+            // MultCheck
+            // 
+            this.MultCheck.Location = new System.Drawing.Point(18, 836);
+            this.MultCheck.Name = "MultCheck";
+            this.MultCheck.Size = new System.Drawing.Size(263, 95);
+            this.MultCheck.TabIndex = 35;
+            this.MultCheck.Text = "Проверка на мультиколлинеарность";
+            this.MultCheck.UseVisualStyleBackColor = true;
+            this.MultCheck.Click += new System.EventHandler(this.MultCheck_Click);
             // 
             // ShiftTextButt
             // 
@@ -317,15 +341,15 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
-            // MultCheck
+            // AutocorrCheckButt
             // 
-            this.MultCheck.Location = new System.Drawing.Point(18, 836);
-            this.MultCheck.Name = "MultCheck";
-            this.MultCheck.Size = new System.Drawing.Size(263, 95);
-            this.MultCheck.TabIndex = 35;
-            this.MultCheck.Text = "Проверка на мультиколлинеарность";
-            this.MultCheck.UseVisualStyleBackColor = true;
-            this.MultCheck.Click += new System.EventHandler(this.MultCheck_Click);
+            this.AutocorrCheckButt.Location = new System.Drawing.Point(18, 1051);
+            this.AutocorrCheckButt.Name = "AutocorrCheckButt";
+            this.AutocorrCheckButt.Size = new System.Drawing.Size(263, 95);
+            this.AutocorrCheckButt.TabIndex = 37;
+            this.AutocorrCheckButt.Text = "Проверка на автокорелляцию";
+            this.AutocorrCheckButt.UseVisualStyleBackColor = true;
+            this.AutocorrCheckButt.Click += new System.EventHandler(this.AutocorrCheckButt_Click);
             // 
             // Form1
             // 
@@ -370,6 +394,8 @@
         private System.Windows.Forms.TextBox ShiftTextBox;
         private System.Windows.Forms.Label ShiftText;
         private System.Windows.Forms.Button MultCheck;
+        private System.Windows.Forms.Button GeteroskedCheckButt;
+        private System.Windows.Forms.Button AutocorrCheckButt;
     }
 }
 
