@@ -56,7 +56,7 @@
             this.RepresLabel = new System.Windows.Forms.Label();
             this.PowerLabel = new System.Windows.Forms.Label();
             this.ExpLabel = new System.Windows.Forms.Label();
-            this.LinarLabel = new System.Windows.Forms.Label();
+            this.LinearLabel = new System.Windows.Forms.Label();
             this.RepresChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.PowerChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ExpChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -90,7 +90,7 @@
             this.Back.Controls.Add(this.RepresLabel);
             this.Back.Controls.Add(this.PowerLabel);
             this.Back.Controls.Add(this.ExpLabel);
-            this.Back.Controls.Add(this.LinarLabel);
+            this.Back.Controls.Add(this.LinearLabel);
             this.Back.Controls.Add(this.RepresChart);
             this.Back.Controls.Add(this.PowerChart);
             this.Back.Controls.Add(this.ExpChart);
@@ -239,13 +239,13 @@
             this.ExpLabel.TabIndex = 21;
             this.ExpLabel.Text = "label3";
             // 
-            // LinarLabel
+            // LinearLabel
             // 
-            this.LinarLabel.Location = new System.Drawing.Point(697, 824);
-            this.LinarLabel.Name = "LinarLabel";
-            this.LinarLabel.Size = new System.Drawing.Size(383, 408);
-            this.LinarLabel.TabIndex = 20;
-            this.LinarLabel.Text = "label2";
+            this.LinearLabel.Location = new System.Drawing.Point(697, 824);
+            this.LinearLabel.Name = "LinearLabel";
+            this.LinearLabel.Size = new System.Drawing.Size(383, 408);
+            this.LinearLabel.TabIndex = 20;
+            this.LinearLabel.Text = "label2";
             // 
             // RepresChart
             // 
@@ -378,7 +378,7 @@
         private System.Windows.Forms.Label RepresLabel;
         private System.Windows.Forms.Label PowerLabel;
         private System.Windows.Forms.Label ExpLabel;
-        private System.Windows.Forms.Label LinarLabel;
+        private System.Windows.Forms.Label LinearLabel;
         private System.Windows.Forms.DataVisualization.Charting.Chart RepresChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart PowerChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart ExpChart;

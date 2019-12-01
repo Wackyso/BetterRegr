@@ -68,9 +68,10 @@ namespace SecondProj
             //ButtNo2.Show();
 
             //Regression reg = new Regression();
-            reg.Analyt(lines, InputRedTextAsk, LinearChart);
 
-            TextManager.TextBuild(LinarLabel, reg);
+
+            reg.Analyt(lines, InputRedTextAsk, LinearChart);// первый варинт первого рисунка
+            TextManager.TextBuild(LinearLabel, reg);
 
             ShiftText.Show();
             ShiftTextBox.Show();
@@ -81,7 +82,8 @@ namespace SecondProj
         {
             reg = new Regression();
             red = InputRedBox.Text;
-            reg.Analyt(lines,InputRedTextAsk,LinearChart, red);
+            reg.Analyt(lines,InputRedTextAsk,LinearChart, red);// первый рисунок c качесвтенными переменными
+            TextManager.TextBuild(LinearLabel, reg);
 
             InputRedBox.Hide();
             InputRedButt.Hide();
@@ -103,24 +105,26 @@ namespace SecondProj
             reg.ShiftKey = true;
             reg.Shifts = Shift;
 
-            reg.Analyt(lines, InputRedTextAsk, ExpChart);
+            reg.ShiftFunk(Shift, LinearChart);//вариант первого рисунка с сдвигом
+            TextManager.TextBuild(LinearLabel, reg);
         }
 
         private void MultCheck_Click(object sender, EventArgs e)
         {
             reg.XsquareCheck(PowerChart);
-            TextManager.TextBuild(ExpLabel, reg);
+            TextManager.TextBuild(PowerLabel, reg);//третий рисунок
         }
 
         private void GeteroskedCheckButt_Click(object sender, EventArgs e)
         {
             reg.XsquareCheck(RepresChart);
-            reg.AutoCorrCheck(ExpChart);
+            TextManager.TextBuild(RepresLabel, reg);//четвертый рисунок
         }
 
         private void AutocorrCheckButt_Click(object sender, EventArgs e)
         {
             reg.AutoCorrCheck(ExpChart);
+            TextManager.TextBuild(ExpLabel, reg);//второй риснок
         }
     }
 }

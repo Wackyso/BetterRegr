@@ -28,7 +28,7 @@ namespace SecondProj
         public string[] FakeVarsMas;
         public int colum;
         public bool ShiftKey;
-        public int Shift;
+        public int Shift;//наблюдение с момента которого призощел сдвиг
         public string Shifts;
         public ChartManager chart;
         public FileReader file;
@@ -41,11 +41,7 @@ namespace SecondProj
             file = new FileReader(lines);
             if (string.Compare(red, "") != 0) { file = new FileReader(lines, red); _key = true; }
 
-            if (string.Compare(Shifts, "") != 0 && ShiftKey)
-            {
-                string[] Shiftsa = Shifts.Split(' ', '	');
-                this.Shift = Convert.ToInt32(Shiftsa[0]);
-            }
+            
 
             file.XYMaking();
             
@@ -56,7 +52,7 @@ namespace SecondProj
 
             SLE(X, Y, Variables, Watches);
             YTempMake(X,Y);
-            double d = EvalQual(Y, YMain);
+            EvalQual(Y, YMain);
 
             chart = new ChartManager(linear);
             chart.FormChart();
@@ -233,7 +229,7 @@ namespace SecondProj
             }
         }
         
-        private double EvalQual(double[] y1,double[] y1main)//р квадрат коеф детерминации 
+        private void EvalQual(double[] y1,double[] y1main)//р квадрат коеф детерминации 
         {
             double nom = 0;
             double denom = 0;
@@ -252,7 +248,11 @@ namespace SecondProj
             }
             
             Aprox /= Watches;
-            return Det;
+
+            double a = Ftest(Det,Variables,Watches);
+            if (a>8) FStat=true;
+             else
+                FStat = false;
         }
 
         private void YTempMake( double[,] _x1, double[] _y1)//засоряет основной Y
@@ -368,12 +368,9 @@ namespace SecondProj
             SLE(_x, _y, Variables, Watches);
 
             YMul = new double[Watches];
-            
 
             YTempMake(X, YMul);
             EvalQual(YMul, YMain);
-
-            
 
             TextManager text = new TextManager();
             chart = new ChartManager(linear);
@@ -499,6 +496,8 @@ namespace SecondProj
                 }
             }
 
+            EvalQual(Y, YMain);
+
             TextManager text = new TextManager();
             chart = new ChartManager(ExpChart);
             chart.FormChart();
@@ -568,7 +567,72 @@ namespace SecondProj
 
         public double Ftest(double det, double variables, double watches)
         {
-            return (det / (variables - 1)) / ((1 - det) / watches - variables);
+            return (det / (variables - 1-1)) / ((1 - det) / (watches - variables-1));
+        }
+
+        public void ShiftFunk(string Shifts,Chart linear)
+        {
+            if (string.Compare(Shifts, "") != 0 && ShiftKey)
+            {
+                string[] Shiftsa = Shifts.Split(' ', '	');
+                this.Shift = Convert.ToInt32(Shiftsa[0]);
+            }
+
+            int variables = Variables * 2;
+            double[,] x1 = new double[Watches, variables];
+            double[,] X1 = new double[Watches, variables];
+
+            for (int i = 0; i < Watches; i++)
+            {
+                for (int j = 0; j < variables; j++)
+                {
+                    if (i < Shift)
+                        if (j < Variables)
+                            x1[i, j] = _x[i, j];
+                        else
+                            x1[i, j] = 0;
+                    else
+                        if (j > Variables)
+                            x1[i, j] = _x[i, j - Variables];
+                        else
+                            if (j==Variables) 
+                                x1[i, j] = _x[i,0];
+                            else 
+                                x1[i, j]=0;
+                }
+                x1[i, 0] = _x[i, 0];
+            }
+
+            for (int i = 0; i < Watches; i++)
+            {
+                for (int j = 0; j < variables; j++)
+                {
+                    if (i < Shift)
+                        if (j < Variables)
+                            X1[i, j] = X[i, j];
+                        else
+                            X1[i, j] = 0;
+                    else
+                        if (j > Variables)
+                        X1[i, j] = X[i, j - Variables];
+                    else
+                        if (j == Variables)
+                        X1[i, j] = X[i,0];
+                    else
+                        X1[i, j] = 0;
+                }
+                X1[i, 0] = X[i, 0];
+            }
+            SLE(x1, _y, variables, Watches);
+            YTempMake(X1, Y);
+
+
+            EvalQual(Y, YMain);
+
+            TextManager text = new TextManager();
+            chart = new ChartManager(linear);
+            chart.FormChart();
+            chart.ChartBuild(linear, Y, file);
         }
     }
 }
