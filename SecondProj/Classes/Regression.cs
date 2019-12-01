@@ -51,7 +51,7 @@ namespace SecondProj
                 Linest();
 
             SLE(X, Y, Variables, Watches);
-            YTempMake(X,Y);
+            YTempMake(X,Y,Variables);
             EvalQual(Y, YMain);
 
             chart = new ChartManager(linear);
@@ -255,13 +255,13 @@ namespace SecondProj
                 FStat = false;
         }
 
-        private void YTempMake( double[,] _x1, double[] _y1)//засоряет основной Y
+        private void YTempMake( double[,] _x1, double[] _y1, double variables)//засоряет основной Y
         {
 
             for (int i = 0; i < Watches; i++)
             {
                 _y1[i] = 0;
-                for (int _j = 0; _j < Variables; _j++)
+                for (int _j = 0; _j < variables; _j++)
                 {
                     _y1[i] += _x1[i, _j] * Coeff[_j];
                 }
@@ -369,7 +369,7 @@ namespace SecondProj
 
             YMul = new double[Watches];
 
-            YTempMake(X, YMul);
+            YTempMake(X, YMul, Variables);
             EvalQual(YMul, YMain);
 
             TextManager text = new TextManager();
@@ -400,7 +400,7 @@ namespace SecondProj
                         Xtest[i, j] = X[i, (j-1)/2+1]* X[i, (j - 1) / 2 + 1];
                 }
             SLE(Xtest, EE, (Variables-1)*2+1, Watches);
-            YTempMake(Xtest,EEeval);
+            YTempMake(Xtest,EEeval, Variables);
             EvalQual(EEeval, EE);
             if (Ftest(Det,Variables,Watches)>10) GeteroSked(EEeval, repres);
 
@@ -422,7 +422,7 @@ namespace SecondProj
             YMul = new double[Watches];
 
 
-            YTempMake(X, YMul);
+            YTempMake(X, YMul, Variables);
             EvalQual(YMul, YMain);
 
 
@@ -570,7 +570,7 @@ namespace SecondProj
             return (det / (variables - 1-1)) / ((1 - det) / (watches - variables-1));
         }
 
-        public void ShiftFunk(string Shifts,Chart linear)
+        public void ShiftFunk(Chart linear, Label txt, string Shifts = "")
         {
             if (string.Compare(Shifts, "") != 0 && ShiftKey)
             {
@@ -592,15 +592,14 @@ namespace SecondProj
                         else
                             x1[i, j] = 0;
                     else
-                        if (j > Variables)
+                        if (j >= Variables)
                             x1[i, j] = _x[i, j - Variables];
-                        else
-                            if (j==Variables) 
-                                x1[i, j] = _x[i,0];
-                            else 
-                                x1[i, j]=0;
+                        else 
+                            x1[i, j]=0;
                 }
                 x1[i, 0] = _x[i, 0];
+                if (i >= Shift) x1[i, Variables] = _x[i, 0];
+                else x1[i, Variables] = 0;
             }
 
             for (int i = 0; i < Watches; i++)
@@ -616,15 +615,20 @@ namespace SecondProj
                         if (j > Variables)
                         X1[i, j] = X[i, j - Variables];
                     else
-                        if (j == Variables)
-                        X1[i, j] = X[i,0];
-                    else
                         X1[i, j] = 0;
                 }
-                X1[i, 0] = X[i, 0];
+                X1[i, 0] = X[i,0];
+                if (i >= Shift) X1[i, Variables] = X[i,0];
+                else X1[i, Variables] = 0;
             }
+
+            /*txt.Text = $"{x1[0, 0]} {x1[0, 1]} {x1[0, 2]} {x1[0, 3]} {x1[0, 4]} {x1[0, 5]}\n" +
+                $"{x1[1, 0]} {x1[1, 1]} {x1[1, 2]} {x1[1, 3]} {x1[1, 4]} {x1[1, 5]}\n" +
+                $"{x1[10, 0]} {x1[10, 1]} {x1[10, 2]} {x1[10, 3]} {x1[10, 4]} {x1[10, 5]}\n"+
+                $"{Shift}";*/
+
             SLE(x1, _y, variables, Watches);
-            YTempMake(X1, Y);
+            YTempMake(X1, Y,variables);
 
 
             EvalQual(Y, YMain);

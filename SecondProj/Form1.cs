@@ -100,12 +100,12 @@ namespace SecondProj
             ShiftTextBox.Hide();
             ShiftTextButt.Hide();
             InputRedTextAsk.Show();
-            string Shift = InputRedBox.Text;
+            string Shift = ShiftTextBox.Text;
 
             reg.ShiftKey = true;
             reg.Shifts = Shift;
 
-            reg.ShiftFunk(Shift, LinearChart);//вариант первого рисунка с сдвигом
+            reg.ShiftFunk( LinearChart,InputRedTextAsk, Shift);//вариант первого рисунка с сдвигом
             TextManager.TextBuild(LinearLabel, reg);
         }
 
